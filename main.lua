@@ -77,7 +77,101 @@ FadeFrame.Completed:Wait()
 IntroFrame:Destroy()
 
 --------------------------------------------------
--- HUB MAIN FRAME
+-- KEY SYSTEM
+--------------------------------------------------
+
+local KeyFrame = Instance.new("Frame")
+KeyFrame.Size = UDim2.new(0,400,0,200)
+KeyFrame.Position = UDim2.new(0.5,-200,0.5,-100)
+KeyFrame.BackgroundColor3 = Color3.fromRGB(20,20,20)
+KeyFrame.BorderSizePixel = 0
+KeyFrame.Parent = ScreenGui
+
+local KeyCorner = Instance.new("UICorner")
+KeyCorner.CornerRadius = UDim.new(0,12)
+KeyCorner.Parent = KeyFrame
+
+local KeyTitle = Instance.new("TextLabel")
+KeyTitle.Size = UDim2.new(1,0,0,50)
+KeyTitle.BackgroundTransparency = 1
+KeyTitle.Text = "Enter Your Key"
+KeyTitle.TextColor3 = Color3.fromRGB(255,255,255)
+KeyTitle.TextSize = 28
+KeyTitle.Font = Enum.Font.GothamBlack
+KeyTitle.Parent = KeyFrame
+
+local KeyBox = Instance.new("TextBox")
+KeyBox.Size = UDim2.new(0,300,0,40)
+KeyBox.Position = UDim2.new(0.5,-150,0.5,-20)
+KeyBox.BackgroundColor3 = Color3.fromRGB(30,30,30)
+KeyBox.Text = ""
+KeyBox.PlaceholderText = "Insert key here"
+KeyBox.TextColor3 = Color3.fromRGB(255,255,255)
+KeyBox.Font = Enum.Font.Gotham
+KeyBox.TextSize = 20
+KeyBox.Parent = KeyFrame
+
+local KeyBoxCorner = Instance.new("UICorner")
+KeyBoxCorner.CornerRadius = UDim.new(0,8)
+KeyBoxCorner.Parent = KeyBox
+
+local SubmitButton = Instance.new("TextButton")
+SubmitButton.Size = UDim2.new(0,120,0,40)
+SubmitButton.Position = UDim2.new(0.5,-60,0.5,35)
+SubmitButton.BackgroundColor3 = Color3.fromRGB(40,40,40)
+SubmitButton.Text = "Submit"
+SubmitButton.TextColor3 = Color3.fromRGB(255,255,255)
+SubmitButton.Font = Enum.Font.GothamBlack
+SubmitButton.TextSize = 20
+SubmitButton.Parent = KeyFrame
+
+local SubmitCorner = Instance.new("UICorner")
+SubmitCorner.CornerRadius = UDim.new(0,8)
+SubmitCorner.Parent = SubmitButton
+
+local CorrectKey = "Release" -- CAMBIA LA KEY QUI
+
+SubmitButton.MouseButton1Click:Connect(function()
+    if KeyBox.Text == CorrectKey then
+        KeyFrame:Destroy()
+        MainFrame.Visible = true
+    else
+        KeyBox.Text = ""
+        KeyBox.PlaceholderText = "Invalid key!"
+        KeyBox.PlaceholderColor3 = Color3.fromRGB(255,0,0)
+    end
+end)
+
+--------------------------------------------------
+-- GET KEY BUTTON
+--------------------------------------------------
+
+local GetKeyButton = Instance.new("TextButton")
+GetKeyButton.Size = UDim2.new(0,120,0,40)
+GetKeyButton.Position = UDim2.new(0.5,-60,0.5,85)
+GetKeyButton.BackgroundColor3 = Color3.fromRGB(40,40,40)
+GetKeyButton.Text = "Get Key"
+GetKeyButton.TextColor3 = Color3.fromRGB(255,255,255)
+GetKeyButton.Font = Enum.Font.GothamBlack
+GetKeyButton.TextSize = 20
+GetKeyButton.Parent = KeyFrame
+
+local GetKeyCorner = Instance.new("UICorner")
+GetKeyCorner.CornerRadius = UDim.new(0,8)
+GetKeyCorner.Parent = GetKeyButton
+
+GetKeyButton.MouseButton1Click:Connect(function()
+    setclipboard("https://discord.gg/Bge5s3CQzq")
+
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = "Ken's Hub Key",
+        Text = "Discord link copied to clipboard!",
+        Duration = 4
+    })
+end)
+
+--------------------------------------------------
+-- HUB MAIN FRAME (HIDDEN UNTIL KEY IS CORRECT)
 --------------------------------------------------
 
 local MainFrame = Instance.new("Frame")
@@ -85,6 +179,7 @@ MainFrame.Size = UDim2.new(0,650,0,400)
 MainFrame.Position = UDim2.new(0.5,-325,0.5,-200)
 MainFrame.BackgroundColor3 = Color3.fromRGB(20,20,20)
 MainFrame.BorderSizePixel = 0
+MainFrame.Visible = false
 MainFrame.Parent = ScreenGui
 
 local MainCorner = Instance.new("UICorner")
@@ -288,7 +383,7 @@ UIS.InputChanged:Connect(function(Input)
 end)
 
 --------------------------------------------------
--- CENTER DIVIDER LINE (VIOLA/BLU)
+-- CENTER DIVIDER LINE
 --------------------------------------------------
 
 local Divider = Instance.new("Frame")
@@ -299,12 +394,12 @@ Divider.BorderSizePixel = 0
 Divider.Parent = MainFrame
 
 --------------------------------------------------
--- DISCORD BUTTON (RIGHT SIDE, SAME HEIGHT AS FLY)
+-- DISCORD BUTTON (RIGHT SIDE)
 --------------------------------------------------
 
 local DiscordButton = Instance.new("TextButton")
 DiscordButton.Size = UDim2.new(0,200,0,40)
-DiscordButton.Position = UDim2.new(1,-220,0,80) -- stessa altezza del FlyButton
+DiscordButton.Position = UDim2.new(1,-220,0,80)
 DiscordButton.BackgroundColor3 = Color3.fromRGB(30,30,30)
 DiscordButton.Text = "Discord"
 DiscordButton.TextColor3 = Color3.fromRGB(255,255,255)
@@ -325,6 +420,7 @@ DiscordButton.MouseButton1Click:Connect(function()
         Duration = 4
     })
 end)
+
 
 --------------------------------------------------
 -- FLY SYSTEM
